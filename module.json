@@ -1,0 +1,33 @@
+{
+  "id": "Scifi-Battle",
+  "title": "SciFi Battle",
+  "description": "A SciFi themed battle module for Foundry VTT",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12",
+    "maximum": "12"
+  },
+  "styles": [
+    "styles/styles.css"
+  ],
+  "esmodules": [
+    "scripts/main.js",
+    "greensock/esm/all.js"
+  ],
+  "authors": [
+    {
+      "name": "Shaz - Frenchy's Module",
+      "email": "votre.email@example.com",
+      "discord": "votre_discord"
+    }
+  ],
+  "url": "https://github.com/votre-repo/Scifi-Battle",
+  "manifest": "https://raw.githubusercontent.com/votre-repo/Scifi-Battle/master/module.json",
+  "download": "https://github.com/votre-repo/Scifi-Battle/archive/v1.0.0.zip",
+  "license": "MIT",
+  "readme": "README.md",
+  "bugs": "https://github.com/votre-repo/Scifi-Battle/issues"
+  
+  
+}

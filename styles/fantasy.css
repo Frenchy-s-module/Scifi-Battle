@@ -1,0 +1,121 @@
+#combat-timeline {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    background: rgba(44, 25, 6, 0.95);
+    border: 2px solid #8b4513;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 100;
+    cursor: default;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: fit-content !important;
+    box-shadow: 0 0 15px rgba(139, 69, 19, 0.3);
+    font-family: 'MedievalSharp', cursive;
+}
+
+.timeline-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #ffd700;
+    font-size: 1.2em;
+    padding: 5px;
+    border-bottom: 1px solid #8b4513;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-right {
+    display: flex;
+    gap: 5px;
+}
+
+.drag-handle {
+    cursor: move;
+    padding: 0 10px;
+    color: #cd853f;
+    font-size: 1.2em;
+    user-select: none;
+}
+
+.drag-handle:hover {
+    color: #deb887;
+}
+
+.combatants-container {
+    margin: 5px 0;
+}
+
+.combatant-row {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background: rgba(44, 25, 6, 0.7);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    margin: 2px 0;
+    border: 1px solid #8b4513;
+}
+
+.combatant-row.active {
+    background: linear-gradient(90deg, 
+        rgba(218, 165, 32, 0.3) 0%,
+        rgba(218, 165, 32, 0.1) 100%
+    );
+    border-left: 3px solid #daa520;
+    animation: pulse 1.5s infinite;
+}
+
+.combatant-token {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #8b4513;
+    margin-right: 10px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 10px rgba(139, 69, 19, 0.5);
+}
+
+.initiative-bar {
+    height: 4px;
+    background: rgba(139, 69, 19, 0.3);
+    border-radius: 2px;
+    position: relative;
+}
+
+.initiative-fill {
+    height: 100%;
+    background: #daa520;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.control-button {
+    padding: 5px 10px;
+    background: rgba(139, 69, 19, 0.3);
+    border: 1px solid #8b4513;
+    border-radius: 4px;
+    color: #ffd700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.control-button:hover {
+    background: rgba(139, 69, 19, 0.5);
+    box-shadow: 0 0 10px rgba(218, 165, 32, 0.3);
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(218, 165, 32, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(218, 165, 32, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(218, 165, 32, 0); }
+}

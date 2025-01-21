@@ -1,0 +1,121 @@
+#combat-timeline {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    background: rgba(28, 28, 28, 0.95);
+    border: 2px solid #b8860b;
+    border-radius: 0;
+    padding: 10px;
+    z-index: 100;
+    cursor: default;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: fit-content !important;
+    box-shadow: 0 0 15px rgba(184, 134, 11, 0.3);
+    font-family: 'Playfair Display', serif;
+}
+
+.timeline-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #b8860b;
+    font-size: 1.2em;
+    padding: 5px;
+    border-bottom: 1px solid #b8860b;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-right {
+    display: flex;
+    gap: 5px;
+}
+
+.drag-handle {
+    cursor: move;
+    padding: 0 10px;
+    color: #b8860b;
+    font-size: 1.2em;
+    user-select: none;
+}
+
+.drag-handle:hover {
+    color: #daa520;
+}
+
+.combatants-container {
+    margin: 5px 0;
+}
+
+.combatant-row {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background: rgba(28, 28, 28, 0.7);
+    border-radius: 0;
+    transition: all 0.3s ease;
+    margin: 2px 0;
+    border: 1px solid #b8860b;
+}
+
+.combatant-row.active {
+    background: linear-gradient(90deg, 
+        rgba(184, 134, 11, 0.3) 0%,
+        rgba(184, 134, 11, 0.1) 100%
+    );
+    border-left: 3px solid #b8860b;
+    animation: pulse 1.5s infinite;
+}
+
+.combatant-token {
+    width: 40px;
+    height: 40px;
+    border-radius: 0;
+    border: 2px solid #b8860b;
+    margin-right: 10px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 10px rgba(184, 134, 11, 0.5);
+}
+
+.initiative-bar {
+    height: 4px;
+    background: rgba(184, 134, 11, 0.3);
+    border-radius: 0;
+    position: relative;
+}
+
+.initiative-fill {
+    height: 100%;
+    background: #b8860b;
+    border-radius: 0;
+    transition: width 0.3s ease;
+}
+
+.control-button {
+    padding: 5px 10px;
+    background: rgba(28, 28, 28, 0.9);
+    border: 1px solid #b8860b;
+    border-radius: 0;
+    color: #b8860b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.control-button:hover {
+    background: rgba(184, 134, 11, 0.2);
+    box-shadow: 0 0 10px rgba(184, 134, 11, 0.3);
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(184, 134, 11, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); }
+}
