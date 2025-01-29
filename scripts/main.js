@@ -1,10 +1,5 @@
 import gsap from "/scripts/greensock/esm/all.js";
 
-// Enregistrer les paramètres du module
-Hooks.once('init', () => {
-    // Suppression du code d'enregistrement des paramètres de style
-});
-
 class CombatTimeline {
     constructor() {
         this.timelineContainer = null;
@@ -14,6 +9,7 @@ class CombatTimeline {
         this.dragOffset = { x: 0, y: 0 };
         this.turnNotification = null;
         this.isCombatStarted = false;
+        this.currentActiveToken = null;
     }
 
     initialize() {
@@ -44,11 +40,11 @@ class CombatTimeline {
             <div class="timeline-header">
                 <div class="header-left">
                     <div class="drag-handle">⋮⋮</div>
-                    <span class="round-counter">Round 1</span>
+                    <span class="round-counter">${game.i18n.localize('SCIFIBATTLE.UI.Round')} 1</span>
                 </div>
                 <div class="header-right">
-                    <button class="initiative-button npc">Initiative PNJ</button>
-                    <button class="initiative-button">Initiative Tous</button>
+                    <button class="initiative-button npc">${game.i18n.localize('SCIFIBATTLE.Buttons.NPCInitiative')}</button>
+                    <button class="initiative-button">${game.i18n.localize('SCIFIBATTLE.Buttons.AllInitiative')}</button>
                 </div>
             </div>
             <div class="combatants-container"></div>
@@ -58,9 +54,9 @@ class CombatTimeline {
                     <button class="control-button previous-turn">◀</button>
                 </div>
                 <div class="control-labels">
-                    <span class="control-label">Round / Tour</span>
-                    <button class="start-combat-button">Démarrer le combat</button>
-                    <button class="control-button end-combat">Terminer le combat</button>
+                    <span class="control-label">${game.i18n.localize('SCIFIBATTLE.UI.RoundTurn')}</span>
+                    <button class="start-combat-button">${game.i18n.localize('SCIFIBATTLE.Buttons.StartCombat')}</button>
+                    <button class="control-button end-combat">${game.i18n.localize('SCIFIBATTLE.Buttons.EndCombat')}</button>
                 </div>
                 <div class="next-controls">
                     <button class="control-button next-turn">▶</button>
@@ -162,31 +158,18 @@ class CombatTimeline {
         
         // Écouter les mises à jour du combat
         Hooks.on('updateCombat', (combat, changes, options, userId) => {
-            console.log('Combat Timeline | Combat mis à jour', changes);
-            if (!combat) return;
-            
-            // Vérifier si le tour a changé et si le combat est démarré
-            if ((changes.turn !== undefined || changes.round !== undefined) && combat.started) {
-                const currentCombatant = combat.turns[combat.turn];
-                if (currentCombatant) {
-                    this.showTurnNotification(currentCombatant);
-                }
-            }
-            
-            // Mettre à jour l'interface
-            this.updateCombatants(combat);
-            
-            // Mettre à jour le round
-            const roundCounter = this.timelineContainer.querySelector('.round-counter');
-            if (roundCounter) {
-                roundCounter.textContent = `Round ${combat.round}`;
-            }
+            console.log('Combat Timeline | Hook updateCombat déclenché', {
+                combat: combat,
+                changed: changes,
+                options: options,
+                userId: userId
+            });
+            this.onCombatUpdate(combat);
         });
         
         // Écouter la fin du combat
-        Hooks.on('deleteCombat', () => {
-            console.log('Combat Timeline | Combat terminé');
-            this.isCombatStarted = false;
+        Hooks.on('deleteCombat', (combat, options, userId) => {
+            console.log('Combat Timeline | Hook deleteCombat déclenché');
             this.onCombatEnd();
         });
 
@@ -254,7 +237,13 @@ class CombatTimeline {
     }
 
     onCombatUpdate(combat) {
-        if (!combat || !this.isCombatStarted) return;
+        if (!combat || !this.isCombatStarted) {
+            console.log("Combat Timeline | Pas de mise à jour - Combat invalide ou non démarré", {
+                combat: combat,
+                isCombatStarted: this.isCombatStarted
+            });
+            return;
+        }
         
         console.log('Combat Timeline | Mise à jour complète');
         this.updateCombatants(combat);
@@ -262,28 +251,39 @@ class CombatTimeline {
         // Mise à jour du round
         const roundCounter = this.timelineContainer.querySelector('.round-counter');
         if (roundCounter) {
-            roundCounter.textContent = `Round ${combat.round}`;
+            roundCounter.textContent = `${game.i18n.localize('SCIFIBATTLE.UI.Round')} ${combat.round}`;
         }
 
-        // Si le tour a changé, afficher la notification
+        // Si le tour a changé, afficher la notification et mettre à jour le halo
         if (combat.current?.combatantId) {
+            console.log("Combat Timeline | Nouveau tour détecté", {
+                combatantId: combat.current.combatantId,
+                turn: combat.turn
+            });
+            
             const currentCombatant = combat.turns[combat.turn];
             if (currentCombatant) {
+                console.log("Combat Timeline | Mise à jour pour le nouveau combattant", currentCombatant);
                 this.showTurnNotification(currentCombatant);
+                this.updateTokenHalo(currentCombatant);
             }
         }
     }
 
     onCombatEnd() {
+        console.log("Combat Timeline | Fin du combat");
         this.isVisible = false;
         if (this.timelineContainer) {
             this.timelineContainer.classList.add('hidden');
         }
         
+        // Nettoyer les effets visuels
+        this.clearCurrentTokenEffect();
+        
         // Réinitialiser le compteur de round
         const roundCounter = this.timelineContainer.querySelector('.round-counter');
         if (roundCounter) {
-            roundCounter.textContent = 'Round 1';
+            roundCounter.textContent = `${game.i18n.localize('SCIFIBATTLE.UI.Round')} 1`;
         }
     }
 
@@ -342,7 +342,7 @@ class CombatTimeline {
         // Mise à jour du compteur de rounds
         const roundCounter = this.timelineContainer.querySelector('.round-counter');
         if (roundCounter) {
-            roundCounter.textContent = `Round ${combat.round}`;
+            roundCounter.textContent = `${game.i18n.localize('SCIFIBATTLE.UI.Round')} ${combat.round}`;
         }
     }
 
@@ -441,11 +441,11 @@ class CombatTimeline {
         confirm.className = 'initiative-confirm';
         
         confirm.innerHTML = `
-            <h3>Terminer le Combat</h3>
-            <p>Êtes-vous sûr de vouloir terminer ce combat ?</p>
+            <h3>${game.i18n.localize('SCIFIBATTLE.Dialogs.EndCombat.Title')}</h3>
+            <p>${game.i18n.localize('SCIFIBATTLE.Dialogs.EndCombat.Message')}</p>
             <div class="initiative-confirm-buttons">
-                <button class="confirm-button confirm">Confirmer</button>
-                <button class="confirm-button cancel">Annuler</button>
+                <button class="confirm-button confirm">${game.i18n.localize('SCIFIBATTLE.Buttons.Confirm')}</button>
+                <button class="confirm-button cancel">${game.i18n.localize('SCIFIBATTLE.Buttons.Cancel')}</button>
             </div>
         `;
         
@@ -505,7 +505,7 @@ class CombatTimeline {
                 </div>
                 <div class="turn-message">
                     <h2>${combatant.name}</h2>
-                    <p>C'est à votre tour d'agir !</p>
+                    <p>${game.i18n.localize('SCIFIBATTLE.Notifications.YourTurn')}</p>
                 </div>
             </div>
         `;
@@ -631,14 +631,14 @@ class CombatTimeline {
                 <div class="turn-notification-content">
                     <div class="turn-token" style="background-image: url('${nextCombatant.token.texture.src}')"></div>
                     <div class="turn-message">
-                        <h2><i class="fas fa-exclamation-triangle"></i> Attention</h2>
-                        <p>Votre êtes le suivant</p>
+                        <h2><i class="fas fa-exclamation-triangle"></i> ${game.i18n.localize('SCIFIBATTLE.Notifications.Warning')}</h2>
+                        <p>${game.i18n.localize('SCIFIBATTLE.Notifications.NextTurn')}</p>
                     </div>
                 </div>
             `;
             
             document.body.appendChild(warning);
-
+            
             // Animation d'entrée
             gsap.fromTo(warning,
                 {
@@ -696,15 +696,15 @@ class CombatTimeline {
         confirm.className = 'initiative-confirm';
         
         const message = type === 'PNJ' ? 
-            'Voulez-vous lancer l\'initiative pour tous les PNJ ?' : 
-            'Voulez-vous lancer l\'initiative pour tous les combattants ?';
+            game.i18n.localize('SCIFIBATTLE.Dialogs.Initiative.NPCMessage') : 
+            game.i18n.localize('SCIFIBATTLE.Dialogs.Initiative.AllMessage');
         
         confirm.innerHTML = `
-            <h3>Confirmation</h3>
+            <h3>${game.i18n.localize('SCIFIBATTLE.Dialogs.Initiative.Title')}</h3>
             <p>${message}</p>
             <div class="initiative-confirm-buttons">
-                <button class="confirm-button confirm">Confirmer</button>
-                <button class="confirm-button cancel">Annuler</button>
+                <button class="confirm-button confirm">${game.i18n.localize('SCIFIBATTLE.Buttons.Confirm')}</button>
+                <button class="confirm-button cancel">${game.i18n.localize('SCIFIBATTLE.Buttons.Cancel')}</button>
             </div>
         `;
         
@@ -749,23 +749,98 @@ class CombatTimeline {
         
         const combat = game.combat;
         if (!combat) {
-            ui.notifications.warn("Aucun combat n'est actif. Sélectionnez d'abord des tokens.");
+            ui.notifications.warn(game.i18n.localize('SCIFIBATTLE.Warnings.NoCombat'));
             return;
         }
         
         if (combat.started) {
-            ui.notifications.warn("Le combat est déjà en cours.");
+            ui.notifications.warn(game.i18n.localize('SCIFIBATTLE.Warnings.CombatStarted'));
             return;
         }
 
         // Vérifier si toutes les initiatives sont lancées
         const hasUnrolledInitiative = combat.combatants.some(c => c.initiative === null);
         if (hasUnrolledInitiative) {
-            ui.notifications.warn("Toutes les initiatives doivent être lancées avant de démarrer le combat.");
+            ui.notifications.warn(game.i18n.localize('SCIFIBATTLE.Warnings.UnrolledInitiative'));
             return;
         }
         
         combat.startCombat();
+    }
+
+    updateTokenHalo(combatant) {
+        console.log("Combat Timeline | updateTokenHalo - Début", combatant);
+
+        // Nettoyer l'ancien effet
+        this.clearCurrentTokenEffect();
+
+        if (!combatant?.token) {
+            console.warn("Combat Timeline | Pas de token valide");
+            return;
+        }
+
+        const token = canvas.tokens.placeables.find(t => t.id === combatant.token.id);
+        if (!token) {
+            console.warn("Combat Timeline | Token non trouvé sur le canvas");
+            return;
+        }
+
+        console.log("Combat Timeline | Token trouvé", token);
+
+        // Sauvegarder l'ID du token actif
+        this.currentActiveToken = token.id;
+
+        // Définir la couleur en fonction de la disposition du token
+        const color = token.document.disposition === CONST.TOKEN_DISPOSITIONS.HOSTILE ? 0xFF0000 : 0x00FF00;
+
+        // Appliquer l'effet visuel
+        token.document.update({
+            light: {
+                bright: token.document.width,
+                dim: token.document.width * 2,
+                color: color,
+                alpha: 0.5,
+                animation: {
+                    type: "pulse",
+                    speed: 5,
+                    intensity: 5
+                }
+            }
+        });
+
+        // Ajouter un effet de bordure
+        token.border.visible = true;
+        token.border.color = color;
+        token.refresh();
+    }
+
+    clearCurrentTokenEffect() {
+        if (this.currentActiveToken) {
+            const oldToken = canvas.tokens.placeables.find(t => t.id === this.currentActiveToken);
+            if (oldToken) {
+                console.log("Combat Timeline | Nettoyage de l'ancien token");
+                
+                // Réinitialiser l'effet de lumière
+                oldToken.document.update({
+                    light: {
+                        bright: 0,
+                        dim: 0,
+                        color: null,
+                        alpha: 0,
+                        animation: {
+                            type: null,
+                            speed: 5,
+                            intensity: 5
+                        }
+                    }
+                });
+
+                // Réinitialiser la bordure
+                oldToken.border.visible = false;
+                oldToken.refresh();
+            }
+            this.currentActiveToken = null;
+        }
     }
 }
 

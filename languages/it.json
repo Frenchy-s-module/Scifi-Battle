@@ -1,0 +1,44 @@
+{
+    "SCIFIBATTLE": {
+        "Settings": {
+            "title": "Impostazioni Sci-fi Battle",
+            "description": "Configura le impostazioni del modulo Sci-fi Battle"
+        },
+        "Messages": {
+            "welcome": "Benvenuto in Sci-fi Battle!"
+        },
+        "UI": {
+            "Round": "Round",
+            "RoundTurn": "Round / Turno"
+        },
+        "Buttons": {
+            "NPCInitiative": "Iniziativa PNG",
+            "AllInitiative": "Iniziativa Tutti",
+            "StartCombat": "Inizia Combattimento",
+            "EndCombat": "Termina Combattimento",
+            "Confirm": "Conferma",
+            "Cancel": "Annulla"
+        },
+        "Dialogs": {
+            "EndCombat": {
+                "Title": "Termina Combattimento",
+                "Message": "Sei sicuro di voler terminare questo combattimento?"
+            },
+            "Initiative": {
+                "Title": "Conferma",
+                "NPCMessage": "Vuoi tirare l'iniziativa per tutti i PNG?",
+                "AllMessage": "Vuoi tirare l'iniziativa per tutti i combattenti?"
+            }
+        },
+        "Notifications": {
+            "YourTurn": "È il tuo turno di agire!",
+            "Warning": "Attenzione",
+            "NextTurn": "Sei il prossimo"
+        },
+        "Warnings": {
+            "NoCombat": "Nessun combattimento attivo. Seleziona prima i token.",
+            "CombatStarted": "Il combattimento è già in corso.",
+            "UnrolledInitiative": "Tutte le iniziative devono essere tirate prima di iniziare il combattimento."
+        }
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "SCIFIBATTLE": {
+        "Settings": {
+            "title": "Sci-fi Battle Inställningar",
+            "description": "Konfigurera Sci-fi Battle modulinställningar"
+        },
+        "Messages": {
+            "welcome": "Välkommen till Sci-fi Battle!"
+        },
+        "UI": {
+            "Round": "Runda",
+            "RoundTurn": "Runda / Tur"
+        },
+        "Buttons": {
+            "NPCInitiative": "NPC Initiativ",
+            "AllInitiative": "Alla Initiativ",
+            "StartCombat": "Starta Strid",
+            "EndCombat": "Avsluta Strid",
+            "Confirm": "Bekräfta",
+            "Cancel": "Avbryt"
+        },
+        "Dialogs": {
+            "EndCombat": {
+                "Title": "Avsluta Strid",
+                "Message": "Är du säker på att du vill avsluta denna strid?"
+            },
+            "Initiative": {
+                "Title": "Bekräftelse",
+                "NPCMessage": "Vill du slå initiativ för alla NPCer?",
+                "AllMessage": "Vill du slå initiativ för alla stridande?"
+            }
+        },
+        "Notifications": {
+            "YourTurn": "Det är din tur att agera!",
+            "Warning": "Varning",
+            "NextTurn": "Du är näst på tur"
+        },
+        "Warnings": {
+            "NoCombat": "Ingen aktiv strid. Välj tokens först.",
+            "CombatStarted": "Striden är redan igång.",
+            "UnrolledInitiative": "Alla initiativ måste slås innan striden kan börja."
+        }
+    }
+}

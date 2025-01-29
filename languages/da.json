@@ -1,0 +1,44 @@
+{
+    "SCIFIBATTLE": {
+        "Settings": {
+            "title": "Sci-fi Battle Indstillinger",
+            "description": "Konfigurer Sci-fi Battle modul indstillinger"
+        },
+        "Messages": {
+            "welcome": "Velkommen til Sci-fi Battle!"
+        },
+        "UI": {
+            "Round": "Runde",
+            "RoundTurn": "Runde / Tur"
+        },
+        "Buttons": {
+            "NPCInitiative": "NPC Initiative",
+            "AllInitiative": "Alle Initiative",
+            "StartCombat": "Start Kamp",
+            "EndCombat": "Afslut Kamp",
+            "Confirm": "Bekræft",
+            "Cancel": "Annuller"
+        },
+        "Dialogs": {
+            "EndCombat": {
+                "Title": "Afslut Kamp",
+                "Message": "Er du sikker på, at du vil afslutte denne kamp?"
+            },
+            "Initiative": {
+                "Title": "Bekræftelse",
+                "NPCMessage": "Vil du rulle initiative for alle NPCer?",
+                "AllMessage": "Vil du rulle initiative for alle kæmpere?"
+            }
+        },
+        "Notifications": {
+            "YourTurn": "Det er din tur til at handle!",
+            "Warning": "Advarsel",
+            "NextTurn": "Du er den næste"
+        },
+        "Warnings": {
+            "NoCombat": "Ingen aktiv kamp. Vælg først tokens.",
+            "CombatStarted": "Kampen er allerede i gang.",
+            "UnrolledInitiative": "Alle initiativer skal rulles før kampen kan starte."
+        }
+    }
+}

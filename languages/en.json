@@ -1,0 +1,44 @@
+{
+    "SCIFIBATTLE": {
+        "Settings": {
+            "title": "Sci-fi Battle Settings",
+            "description": "Configure Sci-fi Battle module settings"
+        },
+        "Messages": {
+            "welcome": "Welcome to Sci-fi Battle!"
+        },
+        "UI": {
+            "Round": "Round",
+            "RoundTurn": "Round / Turn"
+        },
+        "Buttons": {
+            "NPCInitiative": "NPC Initiative",
+            "AllInitiative": "All Initiative",
+            "StartCombat": "Start Combat",
+            "EndCombat": "End Combat",
+            "Confirm": "Confirm",
+            "Cancel": "Cancel"
+        },
+        "Dialogs": {
+            "EndCombat": {
+                "Title": "End Combat",
+                "Message": "Are you sure you want to end this combat?"
+            },
+            "Initiative": {
+                "Title": "Confirmation",
+                "NPCMessage": "Do you want to roll initiative for all NPCs?",
+                "AllMessage": "Do you want to roll initiative for all combatants?"
+            }
+        },
+        "Notifications": {
+            "YourTurn": "It's your turn to act!",
+            "Warning": "Warning",
+            "NextTurn": "You're next"
+        },
+        "Warnings": {
+            "NoCombat": "No active combat. Select tokens first.",
+            "CombatStarted": "Combat is already in progress.",
+            "UnrolledInitiative": "All initiatives must be rolled before starting combat."
+        }
+    }
+}

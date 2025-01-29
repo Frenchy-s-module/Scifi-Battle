@@ -1,0 +1,44 @@
+{
+    "SCIFIBATTLE": {
+        "Settings": {
+            "title": "Sci-fi Battle Einstellungen",
+            "description": "Konfigurieren Sie die Einstellungen des Sci-fi Battle-Moduls"
+        },
+        "Messages": {
+            "welcome": "Willkommen bei Sci-fi Battle!"
+        },
+        "UI": {
+            "Round": "Runde",
+            "RoundTurn": "Runde / Zug"
+        },
+        "Buttons": {
+            "NPCInitiative": "NSC-Initiative",
+            "AllInitiative": "Alle Initiative",
+            "StartCombat": "Kampf starten",
+            "EndCombat": "Kampf beenden",
+            "Confirm": "Bestätigen",
+            "Cancel": "Abbrechen"
+        },
+        "Dialogs": {
+            "EndCombat": {
+                "Title": "Kampf beenden",
+                "Message": "Möchten Sie diesen Kampf wirklich beenden?"
+            },
+            "Initiative": {
+                "Title": "Bestätigung",
+                "NPCMessage": "Möchten Sie die Initiative für alle NSCs würfeln?",
+                "AllMessage": "Möchten Sie die Initiative für alle Kämpfer würfeln?"
+            }
+        },
+        "Notifications": {
+            "YourTurn": "Du bist am Zug!",
+            "Warning": "Achtung",
+            "NextTurn": "Du bist als Nächstes dran"
+        },
+        "Warnings": {
+            "NoCombat": "Kein aktiver Kampf. Wählen Sie zuerst Tokens aus.",
+            "CombatStarted": "Der Kampf läuft bereits.",
+            "UnrolledInitiative": "Alle Initiativen müssen gewürfelt werden, bevor der Kampf beginnt."
+        }
+    }
+}

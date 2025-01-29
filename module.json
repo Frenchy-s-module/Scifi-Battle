@@ -8,6 +8,48 @@
     "verified": "12",
     "maximum": "12"
   },
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    },
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "languages/fr.json"
+    },
+    {
+      "lang": "de",
+      "name": "Deutsch",
+      "path": "languages/de.json"
+    },
+    {
+      "lang": "da",
+      "name": "Dansk",
+      "path": "languages/da.json"
+    },
+    {
+      "lang": "sv",
+      "name": "Svenska",
+      "path": "languages/sv.json"
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "languages/es.json"
+    },
+    {
+      "lang": "it",
+      "name": "Italiano",
+      "path": "languages/it.json"
+    },
+    {
+      "lang": "no",
+      "name": "Norsk",
+      "path": "languages/no.json"
+    }
+  ],
   "styles": [
     "styles/styles.css"
   ],
@@ -28,6 +70,4 @@
   "license": "MIT",
   "readme": "README.md",
   "bugs": "https://github.com/votre-repo/Scifi-Battle/issues"
-  
-  
 }
