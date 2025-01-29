@@ -78,7 +78,6 @@ https://github.com/Frenchy-s-module/Scifi-Battle/releases/latest/download/module
 
 For support, feature requests, or bug reports:
 - Create an issue on [GitHub](https://github.com/Frenchy-s-module/Scifi-Battle/issues)
-- Join our [Discord community](https://discord.gg/your-discord)
 
 ---
 
@@ -158,4 +157,3 @@ https://github.com/Frenchy-s-module/Scifi-Battle/releases/latest/download/module
 
 Pour le support, les demandes de fonctionnalités ou les signalements de bugs :
 - Créez une issue sur [GitHub](https://github.com/Frenchy-s-module/Scifi-Battle/issues)
-- Rejoignez notre [communauté Discord](https://discord.gg/your-discord)
