@@ -13,7 +13,6 @@ class CombatTimeline {
     }
 
     initialize() {
-        console.log('Combat Timeline | Initialisation');
         this.createTimelineUI();
         this.registerEventListeners();
         
@@ -87,18 +86,11 @@ class CombatTimeline {
         const rollNPCButton = this.timelineContainer.querySelector('.initiative-button.npc');
         const rollAllButton = this.timelineContainer.querySelector('.initiative-button:not(.npc)');
         
-        console.log('Combat Timeline | Boutons initiative trouvés:', { 
-            rollNPCButton: rollNPCButton ? 'oui' : 'non', 
-            rollAllButton: rollAllButton ? 'oui' : 'non' 
-        });
-        
         rollNPCButton?.addEventListener('click', () => {
-            console.log('Combat Timeline | Clic sur bouton Initiative PNJ');
             this.showInitiativeConfirm('PNJ');
         });
         
         rollAllButton?.addEventListener('click', () => {
-            console.log('Combat Timeline | Clic sur bouton Initiative TOUS');
             this.showInitiativeConfirm('TOUS');
         });
         
@@ -148,7 +140,6 @@ class CombatTimeline {
     registerEventListeners() {
         // Écouter la création d'un combat
         Hooks.on('createCombat', (combat) => {
-            console.log('Combat Timeline | Combat créé');
             this.isVisible = true;
             if (this.timelineContainer) {
                 this.timelineContainer.classList.remove('hidden');
@@ -158,31 +149,22 @@ class CombatTimeline {
         
         // Écouter les mises à jour du combat
         Hooks.on('updateCombat', (combat, changes, options, userId) => {
-            console.log('Combat Timeline | Hook updateCombat déclenché', {
-                combat: combat,
-                changed: changes,
-                options: options,
-                userId: userId
-            });
             this.onCombatUpdate(combat);
         });
         
         // Écouter la fin du combat
         Hooks.on('deleteCombat', (combat, options, userId) => {
-            console.log('Combat Timeline | Hook deleteCombat déclenché');
             this.onCombatEnd();
         });
 
         // Écouter le début du combat
         Hooks.on('combatStart', (combat) => {
-            console.log('Combat Timeline | Combat démarré');
             this.isCombatStarted = true;
             this.onCombatStart(combat);
         });
 
         // Écouter les changements de tour
         Hooks.on('combatTurn', (combat, update, options) => {
-            console.log('Combat Timeline | Nouveau tour');
             if (combat && combat.turns[combat.turn]) {
                 this.showTurnNotification(combat.turns[combat.turn]);
             }
@@ -190,7 +172,6 @@ class CombatTimeline {
 
         // Écouter les changements d'initiative
         Hooks.on('updateCombatant', (combatant, changes, options, userId) => {
-            console.log('Combat Timeline | Mise à jour combattant', changes);
             
             // Si l'initiative vient d'être définie
             if ('initiative' in changes) {
@@ -199,7 +180,6 @@ class CombatTimeline {
                     // Vérifier si c'est la première initiative lancée
                     const hasInitiative = combat.turns.some(c => c.initiative !== null);
                     if (hasInitiative && !this.isVisible) {
-                        console.log('Combat Timeline | Première initiative lancée, affichage du module');
                         this.onCombatStart(combat);
                     }
                     this.updateCombatants(combat);
@@ -222,7 +202,6 @@ class CombatTimeline {
     }
 
     onCombatStart(combat) {
-        console.log('Combat Timeline | Démarrage du combat', combat);
         if (!combat) return;
         
         // Ne pas réafficher si déjà visible
@@ -238,14 +217,9 @@ class CombatTimeline {
 
     onCombatUpdate(combat) {
         if (!combat || !this.isCombatStarted) {
-            console.log("Combat Timeline | Pas de mise à jour - Combat invalide ou non démarré", {
-                combat: combat,
-                isCombatStarted: this.isCombatStarted
-            });
             return;
         }
         
-        console.log('Combat Timeline | Mise à jour complète');
         this.updateCombatants(combat);
         
         // Mise à jour du round
@@ -256,14 +230,9 @@ class CombatTimeline {
 
         // Si le tour a changé, afficher la notification et mettre à jour le halo
         if (combat.current?.combatantId) {
-            console.log("Combat Timeline | Nouveau tour détecté", {
-                combatantId: combat.current.combatantId,
-                turn: combat.turn
-            });
             
             const currentCombatant = combat.turns[combat.turn];
             if (currentCombatant) {
-                console.log("Combat Timeline | Mise à jour pour le nouveau combattant", currentCombatant);
                 this.showTurnNotification(currentCombatant);
                 this.updateTokenHalo(currentCombatant);
             }
@@ -271,7 +240,6 @@ class CombatTimeline {
     }
 
     onCombatEnd() {
-        console.log("Combat Timeline | Fin du combat");
         this.isVisible = false;
         if (this.timelineContainer) {
             this.timelineContainer.classList.add('hidden');
@@ -359,7 +327,6 @@ class CombatTimeline {
         
         // Calculer l'initiative maximale pour les barres de progression
         const maxInit = Math.max(...combatants.map(c => c.initiative || 0));
-        console.log('Combat Timeline | Initiative maximale:', maxInit);
 
         // Créer les éléments pour chaque combattant dans l'ordre de Foundry
         combatants.forEach((combatant, index) => {
@@ -392,12 +359,6 @@ class CombatTimeline {
             
             // Vérifier si le combattant est mort directement depuis le combattant
             const isDead = combatant.isDefeated;
-            console.log('Combat Timeline | État du combattant:', {
-                name: combatant.name,
-                isDead: isDead,
-                isDefeated: combatant.isDefeated,
-                combatant: combatant
-            });
             
             row.innerHTML = `
                 <div class="combatant-token" style="background-image: url('${combatant.token.texture.src}')">
@@ -491,12 +452,6 @@ class CombatTimeline {
         
         // Vérifier si le combattant est mort directement depuis le combattant
         const isDead = combatant.isDefeated;
-        console.log('Combat Timeline | État du combattant (notification):', {
-            name: combatant.name,
-            isDead: isDead,
-            isDefeated: combatant.isDefeated,
-            combatant: combatant
-        });
         
         const template = `
             <div class="turn-notification-content">
@@ -667,31 +622,23 @@ class CombatTimeline {
     }
 
     rollNPCInitiative() {
-        console.log('Combat Timeline | Lancement initiative PNJ');
         if (!game.combat) {
-            console.log('Combat Timeline | Erreur: Pas de combat actif');
             return;
         }
-        
+
         const npcs = game.combat.combatants.filter(c => !c.actor?.hasPlayerOwner);
-        console.log('Combat Timeline | PNJs trouvés:', npcs.map(n => n.name));
         game.combat.rollNPC(npcs);
     }
 
     rollAllInitiative() {
-        console.log('Combat Timeline | Lancement initiative TOUS');
         if (!game.combat) {
-            console.log('Combat Timeline | Erreur: Pas de combat actif');
             return;
         }
-        
-        console.log('Combat Timeline | Lancement rollAll()');
+
         game.combat.rollAll();
     }
 
     showInitiativeConfirm(type) {
-        console.log('Combat Timeline | Affichage popup confirmation pour:', type);
-        
         const confirm = document.createElement('div');
         confirm.className = 'initiative-confirm';
         
@@ -709,18 +656,15 @@ class CombatTimeline {
         `;
         
         document.body.appendChild(confirm);
-        console.log('Combat Timeline | Popup créée');
         
         setTimeout(() => {
             confirm.classList.add('show');
-            console.log('Combat Timeline | Popup affichée');
         }, 10);
         
         const confirmBtn = confirm.querySelector('.confirm');
         const cancelBtn = confirm.querySelector('.cancel');
         
         confirmBtn.addEventListener('click', () => {
-            console.log('Combat Timeline | Confirmation initiative', type);
             if (type === 'PNJ') {
                 this.rollNPCInitiative();
             } else {
@@ -735,11 +679,9 @@ class CombatTimeline {
         });
         
         function closeConfirm() {
-            console.log('Combat Timeline | Fermeture popup');
             confirm.classList.remove('show');
             setTimeout(() => {
                 confirm.remove();
-                console.log('Combat Timeline | Popup supprimée');
             }, 300);
         }
     }
@@ -785,8 +727,6 @@ class CombatTimeline {
             return;
         }
 
-        console.log("Combat Timeline | Token trouvé", token);
-
         // Sauvegarder l'ID du token actif
         this.currentActiveToken = token.id;
 
@@ -818,7 +758,6 @@ class CombatTimeline {
         if (this.currentActiveToken) {
             const oldToken = canvas.tokens.placeables.find(t => t.id === this.currentActiveToken);
             if (oldToken) {
-                console.log("Combat Timeline | Nettoyage de l'ancien token");
                 
                 // Réinitialiser l'effet de lumière
                 oldToken.document.update({
@@ -846,15 +785,6 @@ class CombatTimeline {
 
 // Initialisation au chargement de Foundry
 Hooks.once('ready', () => {
-    console.log('Combat Timeline | Ready Hook');
     window.combatTimeline = new CombatTimeline();
     window.combatTimeline.initialize();
-});
-
-// Ajouter un Hook pour détecter les changements de paramètres
-Hooks.on('renderSettingsConfig', () => {
-    const style = game.settings.get('Scifi-Battle', 'selectedStyle');
-    if (window.combatTimeline) {
-        window.combatTimeline.setStyle(style);
-    }
 });
