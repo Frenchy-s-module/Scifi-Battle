@@ -2,8 +2,15 @@
     "SCIFIBATTLE": {
         "Settings": {
             "title": "Sci-fi Battle Indstillinger",
-            "description": "Konfigurer Sci-fi Battle modul indstillinger"
+            "description": "Konfigurer Sci-fi Battle modulindstillinger",
+            "GitHub": {
+                "Name": "GitHub",
+                "Label": "GitHub",
+                "Hint": "Besøg modulets GitHub-repository"
+            }
         },
+        "Title": "Sci-Fi Kamp-Tidslinje",
+        "Description": "Et kraftfuldt og intuitivt kampstyringsmodul til sci-fi-spil",
         "Messages": {
             "welcome": "Velkommen til Sci-fi Battle!"
         },

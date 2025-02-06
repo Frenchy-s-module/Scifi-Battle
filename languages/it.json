@@ -2,8 +2,15 @@
     "SCIFIBATTLE": {
         "Settings": {
             "title": "Impostazioni Sci-fi Battle",
-            "description": "Configura le impostazioni del modulo Sci-fi Battle"
+            "description": "Configura le impostazioni del modulo Sci-fi Battle",
+            "GitHub": {
+                "Name": "GitHub",
+                "Label": "GitHub",
+                "Hint": "Visita il repository GitHub del modulo"
+            }
         },
+        "Title": "Timeline di Combattimento Sci-Fi",
+        "Description": "Un modulo potente e intuitivo per la gestione del combattimento per giochi di fantascienza",
         "Messages": {
             "welcome": "Benvenuto in Sci-fi Battle!"
         },

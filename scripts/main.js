@@ -783,6 +783,37 @@ class CombatTimeline {
     }
 }
 
+// Classe pour le lien GitHub
+class GitHubLink extends FormApplication {
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            id: "scifi-battle-github-link",
+            title: "GitHub",
+            template: "templates/settings/menu.html"
+        });
+    }
+
+    render() {
+        window.open("https://github.com/Frenchy-s-module/Scifi-Battle", "_blank");
+        return null;
+    }
+}
+
+// Initialisation du module
+Hooks.once('init', () => {
+    console.log('Sci-Fi Battle Timeline | Initializing module');
+
+    // Enregistrement du bouton GitHub
+    game.settings.registerMenu("Scifi-Battle", "githubLink", {
+        name: game.i18n.localize("SCIFIBATTLE.Settings.GitHub.Name"),
+        label: game.i18n.localize("SCIFIBATTLE.Settings.GitHub.Label"),
+        hint: game.i18n.localize("SCIFIBATTLE.Settings.GitHub.Hint"),
+        icon: "fab fa-github",
+        type: GitHubLink,
+        restricted: false
+    });
+});
+
 // Initialisation au chargement de Foundry
 Hooks.once('ready', () => {
     window.combatTimeline = new CombatTimeline();

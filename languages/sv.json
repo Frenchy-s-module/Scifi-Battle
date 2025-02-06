@@ -2,8 +2,15 @@
     "SCIFIBATTLE": {
         "Settings": {
             "title": "Sci-fi Battle Inställningar",
-            "description": "Konfigurera Sci-fi Battle modulinställningar"
+            "description": "Konfigurera Sci-fi Battle modulinställningar",
+            "GitHub": {
+                "Name": "GitHub",
+                "Label": "GitHub",
+                "Hint": "Besök modulens GitHub-repository"
+            }
         },
+        "Title": "Sci-Fi Strids-Tidslinje",
+        "Description": "En kraftfull och intuitiv stridshanteringsmodul för sci-fi-spel",
         "Messages": {
             "welcome": "Välkommen till Sci-fi Battle!"
         },

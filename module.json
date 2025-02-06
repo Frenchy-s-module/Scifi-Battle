@@ -1,13 +1,25 @@
 {
   "id": "Scifi-Battle",
-  "title": "SciFi Battle",
-  "description": "A SciFi themed battle module for Foundry VTT",
+  "title": "Sci-Fi Battle",
+  "description": "A powerful and intuitive combat management module for sci-fi themed games",
   "version": "1.0.0",
   "compatibility": {
     "minimum": "12",
     "verified": "12",
     "maximum": "12"
   },
+  "authors": [
+    {
+      "name": "Frenchy",
+      "url": "https://github.com/Frenchy-s-module"
+    }
+  ],
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "styles": [
+    "styles/styles.css"
+  ],
   "languages": [
     {
       "lang": "en",
@@ -50,24 +62,10 @@
       "path": "languages/no.json"
     }
   ],
-  "styles": [
-    "styles/styles.css"
-  ],
-  "esmodules": [
-    "scripts/main.js",
-    "greensock/esm/all.js"
-  ],
-  "authors": [
-    {
-      "name": "Shaz - Frenchy's Module",
-      "email": "votre.email@example.com",
-      "discord": "votre_discord"
-    }
-  ],
-  "url": "https://github.com/votre-repo/Scifi-Battle",
-  "manifest": "https://raw.githubusercontent.com/votre-repo/Scifi-Battle/master/module.json",
-  "download": "https://github.com/votre-repo/Scifi-Battle/archive/v1.0.0.zip",
+  "url": "https://github.com/Frenchy-s-module/Scifi-Battle",
+  "manifest": "https://github.com/Frenchy-s-module/Scifi-Battle/releases/latest/download/module.json",
+  "download": "https://github.com/Frenchy-s-module/Scifi-Battle/releases/latest/download/module.zip",
   "license": "MIT",
   "readme": "README.md",
-  "bugs": "https://github.com/votre-repo/Scifi-Battle/issues"
+  "bugs": "https://github.com/Frenchy-s-module/Scifi-Battle/issues"
 }
