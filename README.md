@@ -1,4 +1,4 @@
-# 🎮 Sci-Fi Battle Timeline for Foundry VTT
+# 🎮 Sci-Fi Battle for Foundry VTT
 
 ### 🌍 Language Selection | Sélection de la langue | Sprachauswahl
 [🇬🇧](#english) | [🇫🇷](#français) | [🇩🇪](#deutsch) | [🇩🇰](#dansk) | [🇸🇪](#svenska) | [🇪🇸](#español) | [🇮🇹](#italiano) | [🇳🇴](#norsk)
@@ -14,7 +14,7 @@
 
 ## 🚀 Overview
 
-Sci-Fi Battle Timeline is a powerful and intuitive combat management module for Foundry VTT, designed specifically for sci-fi themed games. It provides an elegant, draggable timeline interface that makes combat management a breeze while maintaining immersion in your futuristic setting.
+Sci-Fi Battle is a powerful and intuitive combat management module for Foundry VTT, designed specifically for sci-fi themed games. It provides an elegant interface that makes combat management a breeze while maintaining immersion in your futuristic setting.
 
 [![GitHub](https://img.shields.io/badge/GitHub-Visit%20Repository-blue?style=flat-square&logo=github)](https://github.com/Frenchy-s-module/Scifi-Battle)
 
@@ -95,7 +95,7 @@ For support, feature requests, or bug reports:
 
 ## 🚀 Aperçu
 
-Sci-Fi Battle Timeline est un module puissant et intuitif de gestion des combats pour Foundry VTT, spécialement conçu pour les jeux de science-fiction. Il offre une interface élégante et déplaçable qui simplifie la gestion des combats tout en maintenant l'immersion dans votre univers futuriste.
+Sci-Fi Battle est un module puissant et intuitif de gestion des combats pour Foundry VTT, spécialement conçu pour les jeux de science-fiction. Il offre une interface élégante qui simplifie la gestion des combats tout en maintenant l'immersion dans votre univers futuriste.
 
 [![GitHub](https://img.shields.io/badge/GitHub-Visiter%20le%20dépôt-blue?style=flat-square&logo=github)](https://github.com/Frenchy-s-module/Scifi-Battle)
 
@@ -176,7 +176,7 @@ Pour le support, les demandes de fonctionnalités ou les signalements de bugs :
 
 ## 🚀 Überblick
 
-Sci-Fi Battle Timeline ist ein leistungsstarkes und intuitives Kampfmanagement-Modul für Foundry VTT, das speziell für Science-Fiction-Spiele entwickelt wurde. Es bietet eine elegante, verschiebbare Timeline-Schnittstelle, die das Kampfmanagement zum Kinderspiel macht und dabei die Immersion in Ihrem futuristischen Setting aufrechterhält.
+Sci-Fi Battle ist ein leistungsstarkes und intuitives Kampfmanagement-Modul für Foundry VTT, das speziell für Science-Fiction-Spiele entwickelt wurde. Es bietet eine elegante Schnittstelle, die das Kampfmanagement zum Kinderspiel macht und dabei die Immersion in Ihrem futuristischen Setting aufrechterhält.
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository%20besuchen-blue?style=flat-square&logo=github)](https://github.com/Frenchy-s-module/Scifi-Battle)
 
@@ -209,17 +209,17 @@ https://github.com/Frenchy-s-module/Scifi-Battle/releases/latest/download/module
 
 ## 🚀 Oversigt
 
-Sci-Fi Battle Timeline er et kraftfuldt og intuitivt kampstyringsmodul til Foundry VTT, specielt designet til sci-fi-spil. Det giver en elegant, træk-og-slip-tidslinje, der gør kampstyring til en leg, mens det bevarer fordybelsen i dit futuristiske miljø.
+Sci-Fi Battle er et kraftfuldt og intuitivt kampstyringsmodul til Foundry VTT, specielt designet til sci-fi-spil. Det giver en elegant grænseflade, der gør kampstyring til en leg, mens det bevarer fordybelsen i dit futuristiske miljø.
 
 [![GitHub](https://img.shields.io/badge/GitHub-Besøg%20repository-blue?style=flat-square&logo=github)](https://github.com/Frenchy-s-module/Scifi-Battle)
 
 ## ✨ Funktioner
 
 ### 🎯 Kampstyring
-- **Interaktiv Tidslinje**: Træk-og-slip-interface til nem kampstyring
+- **Interaktiv Tidslinje**: Træk-og-slip-grensesnitt for enkel kampstyring
 - **Visuel Tursporing**: Tydelige visuelle indikatorer for nuværende tur og runde
-- **Hurtigstyring**: Intuitive knapper til næste/forrige tur og runde
-- **Kampflow**: Start/Afslut kamp med bekræftelsesdialoger
+- **Hurtigkontroller**: Intuitive knapper for næste/forrige tur og runde
+- **Kampflow**: Start/Slut kamp med bekræftelsesdialoger
 
 ## 📥 Installation
 
@@ -237,7 +237,7 @@ https://github.com/Frenchy-s-module/Scifi-Battle/releases/latest/download/module
 
 ## 🚀 Översikt
 
-Sci-Fi Battle Timeline är en kraftfull och intuitiv stridshanteringsmodul för Foundry VTT, särskilt utformad för sci-fi-spel. Den erbjuder ett elegant, dragbart tidslinjegränssnitt som gör stridshantering till en barnlek samtidigt som den behåller inlevelsen i din futuristiska miljö.
+Sci-Fi Battle är en kraftfull och intuitiv stridshanteringsmodul för Foundry VTT, särskilt utformad för sci-fi-spel. Den erbjuder ett elegant gränssnitt som gör stridshantering till en barnlek samtidigt som den behåller inlevelsen i din futuristiska miljö.
 
 [![GitHub](https://img.shields.io/badge/GitHub-Besök%20repository-blue?style=flat-square&logo=github)](https://github.com/Frenchy-s-module/Scifi-Battle)
 
@@ -265,7 +265,7 @@ https://github.com/Frenchy-s-module/Scifi-Battle/releases/latest/download/module
 
 ## 🚀 Descripción General
 
-Sci-Fi Battle Timeline es un módulo potente e intuitivo de gestión de combate para Foundry VTT, diseñado específicamente para juegos de ciencia ficción. Proporciona una elegante interfaz de línea de tiempo arrastrable que hace que la gestión del combate sea muy sencilla mientras mantiene la inmersión en tu escenario futurista.
+Sci-Fi Battle es un módulo potente e intuitivo de gestión de combate para Foundry VTT, diseñado específicamente para juegos de ciencia ficción. Proporciona una elegante interfaz que hace que la gestión del combate sea muy sencilla mientras mantiene la inmersión en tu escenario futurista.
 
 [![GitHub](https://img.shields.io/badge/GitHub-Visitar%20repositorio-blue?style=flat-square&logo=github)](https://github.com/Frenchy-s-module/Scifi-Battle)
 
@@ -293,7 +293,7 @@ https://github.com/Frenchy-s-module/Scifi-Battle/releases/latest/download/module
 
 ## 🚀 Panoramica
 
-Sci-Fi Battle Timeline è un modulo potente e intuitivo per la gestione del combattimento per Foundry VTT, progettato specificamente per giochi di fantascienza. Fornisce un'elegante interfaccia timeline trascinabile che rende la gestione del combattimento un gioco da ragazzi mantenendo l'immersione nel tuo ambiente futuristico.
+Sci-Fi Battle è un modulo potente e intuitivo per la gestione del combattimento per Foundry VTT, progettato specificamente per giochi di fantascienza. Fornisce un'elegante interfaccia che rende la gestione del combattimento un gioco da ragazzi mantenendo l'immersione nel tuo ambiente futuristico.
 
 [![GitHub](https://img.shields.io/badge/GitHub-Visita%20repository-blue?style=flat-square&logo=github)](https://github.com/Frenchy-s-module/Scifi-Battle)
 
@@ -321,7 +321,7 @@ https://github.com/Frenchy-s-module/Scifi-Battle/releases/latest/download/module
 
 ## 🚀 Oversikt
 
-Sci-Fi Battle Timeline er en kraftig og intuitiv kampstyringsmodul for Foundry VTT, spesielt designet for sci-fi-spill. Den gir et elegant, flyttbart tidslinjegrensesnitt som gjør kampstyring til en lek mens den opprettholder innlevelsen i ditt futuristiske miljø.
+Sci-Fi Battle er en kraftig og intuitiv kampstyringsmodul for Foundry VTT, spesielt designet for sci-fi-spill. Den gir et elegant grensesnitt som gjør kampstyring til en lek mens den opprettholder innlevelsen i ditt futuristiske miljø.
 
 [![GitHub](https://img.shields.io/badge/GitHub-Besøk%20repository-blue?style=flat-square&logo=github)](https://github.com/Frenchy-s-module/Scifi-Battle)
 
