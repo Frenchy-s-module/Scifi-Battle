@@ -10,6 +10,7 @@ class CombatTimeline {
         this.turnNotification = null;
         this.isCombatStarted = false;
         this.currentActiveToken = null;
+        this.currentAuraToken = null;
     }
 
     initialize() {
@@ -39,7 +40,7 @@ class CombatTimeline {
             <div class="timeline-header">
                 <div class="header-left">
                     <div class="drag-handle">⋮⋮</div>
-                    <span class="round-counter">${game.i18n.localize('SCIFIBATTLE.UI.Round')} 1</span>
+                    <span id="combat-round" class="round-counter">${game.i18n.localize('SCIFIBATTLE.UI.Round')} 1</span>
                 </div>
                 <div class="header-right">
                     <button class="initiative-button npc">${game.i18n.localize('SCIFIBATTLE.Buttons.NPCInitiative')}</button>
@@ -164,7 +165,7 @@ class CombatTimeline {
         });
 
         // Écouter les changements de tour
-        Hooks.on('combatTurn', (combat, update, options) => {
+        Hooks.on('updateCombat', (combat, update, options) => {
             if (combat && combat.turns[combat.turn]) {
                 this.showTurnNotification(combat.turns[combat.turn]);
             }
@@ -222,7 +223,7 @@ class CombatTimeline {
         
         this.updateCombatants(combat);
         
-        // Mise à jour du round
+        // Mise à jour du numéro de manche
         const roundCounter = this.timelineContainer.querySelector('.round-counter');
         if (roundCounter) {
             roundCounter.textContent = `${game.i18n.localize('SCIFIBATTLE.UI.Round')} ${combat.round}`;
@@ -234,7 +235,7 @@ class CombatTimeline {
             const currentCombatant = combat.turns[combat.turn];
             if (currentCombatant) {
                 this.showTurnNotification(currentCombatant);
-                this.updateTokenHalo(currentCombatant);
+                this.updateTokenAura(currentCombatant);
             }
         }
     }
@@ -247,7 +248,7 @@ class CombatTimeline {
         
         // Nettoyer les effets visuels
         this.clearCurrentTokenEffect();
-        
+
         // Réinitialiser le compteur de round
         const roundCounter = this.timelineContainer.querySelector('.round-counter');
         if (roundCounter) {
@@ -325,11 +326,18 @@ class CombatTimeline {
         // Si le combat n'est pas encore démarré, utiliser les combattants dans l'ordre d'ajout
         const combatants = combat.started ? combat.turns : combat.combatants;
         
+        // Convertir la collection en tableau et trier
+        const sortedCombatants = Array.from(combatants).sort((a, b) => {
+            const initA = Number(a.initiative) || 0;
+            const initB = Number(b.initiative) || 0;
+            return initB - initA;  // Tri décroissant
+        });
+
         // Calculer l'initiative maximale pour les barres de progression
-        const maxInit = Math.max(...combatants.map(c => c.initiative || 0));
+        const maxInit = Math.max(...sortedCombatants.map(c => c.initiative || 0));
 
         // Créer les éléments pour chaque combattant dans l'ordre de Foundry
-        combatants.forEach((combatant, index) => {
+        sortedCombatants.forEach((combatant, index) => {
             if (!combatant || !combatant.token) return;
             
             const row = document.createElement('div');
@@ -375,7 +383,8 @@ class CombatTimeline {
                 </div>
             `;
             
-            container.appendChild(row);
+            // Insérer au début de la timeline au lieu de la fin
+            container.insertBefore(row, container.firstChild);
 
             // Ajouter l'écouteur d'événements pour le bouton de lancement d'initiative
             const rollButton = row.querySelector('.roll-initiative');
@@ -434,6 +443,19 @@ class CombatTimeline {
     }
 
     showTurnNotification(combatant) {
+        // Ne pas afficher de notification si le combat n'est pas démarré
+        if (!game.combat?.started) return;
+
+        console.log("Sci-Fi Battle Timeline | showTurnNotification appelé pour", combatant.name, "isGM:", game.user.isGM);
+        
+        // Seul le MJ met à jour l'aura
+        if (game.user.isGM) {
+            this.updateTokenAura(combatant);
+        }
+
+        // Créer la notification localement pour tout le monde
+        console.log("Sci-Fi Battle Timeline | Création de la notification pour", combatant.name);
+        
         // Supprimer immédiatement toute notification existante et ses timers
         if (this.turnNotification) {
             clearTimeout(this.hideTimeout);
@@ -710,8 +732,8 @@ class CombatTimeline {
         combat.startCombat();
     }
 
-    updateTokenHalo(combatant) {
-        console.log("Combat Timeline | updateTokenHalo - Début", combatant);
+    updateTokenAura(combatant) {
+        console.log("Combat Timeline | updateTokenAura - Début", combatant);
 
         // Nettoyer l'ancien effet
         this.clearCurrentTokenEffect();
@@ -781,6 +803,75 @@ class CombatTimeline {
             this.currentActiveToken = null;
         }
     }
+
+    // Gestion de l'aura du token actif
+    updateTokenAura(combatant) {
+        // Seul le MJ peut gérer les auras
+        if (!game.user.isGM) {
+            console.log("Sci-Fi Battle Timeline | Ignoré : seul le MJ peut gérer les auras");
+            return;
+        }
+
+        console.log("Sci-Fi Battle Timeline | Mise à jour de l'aura du token", combatant?.name);
+        
+        // Enlever l'aura du token précédent
+        if (this.currentAuraToken) {
+            console.log("Sci-Fi Battle Timeline | Suppression de l'aura précédente");
+            const previousToken = canvas.tokens.placeables.find(t => t.id === this.currentAuraToken);
+            if (previousToken) {
+                previousToken.document.update({
+                    "light": {
+                        "bright": 0,
+                        "dim": 0,
+                        "color": "",
+                        "alpha": 0,
+                        "animation": {
+                            "type": "none"
+                        }
+                    }
+                });
+            }
+            this.currentAuraToken = null;
+        }
+
+        // Ajouter l'aura au nouveau token si on est en combat
+        if (combatant && game.combat?.started) {
+            console.log("Sci-Fi Battle Timeline | Ajout de l'aura au nouveau token");
+            const token = canvas.tokens.placeables.find(t => t.id === combatant.token.id);
+            if (token) {
+                // Obtenir la couleur du bandeau en fonction de la disposition du token
+                let auraColor;
+                switch(token.document.disposition) {
+                    case CONST.TOKEN_DISPOSITIONS.FRIENDLY:
+                        auraColor = "#00ff00"; // Vert pour les alliés
+                        break;
+                    case CONST.TOKEN_DISPOSITIONS.NEUTRAL:
+                        auraColor = "#ffff00"; // Jaune pour les neutres
+                        break;
+                    case CONST.TOKEN_DISPOSITIONS.HOSTILE:
+                        auraColor = "#ff0000"; // Rouge pour les ennemis
+                        break;
+                    default:
+                        auraColor = "#ff9900"; // Orange par défaut
+                }
+
+                token.document.update({
+                    "light": {
+                        "bright": 0,
+                        "dim": 1.5,
+                        "color": auraColor,
+                        "alpha": 0.5,
+                        "animation": {
+                            "type": "pulse",
+                            "speed": 3,
+                            "intensity": 3
+                        }
+                    }
+                });
+                this.currentAuraToken = token.id;
+            }
+        }
+    }
 }
 
 // Classe pour le lien GitHub
@@ -802,20 +893,97 @@ class GitHubLink extends FormApplication {
 // Initialisation du module
 Hooks.once('init', () => {
     console.log('Sci-Fi Battle Timeline | Initializing module');
-
-    // Enregistrement du bouton GitHub
-    game.settings.registerMenu("Scifi-Battle", "githubLink", {
-        name: game.i18n.localize("SCIFIBATTLE.Settings.GitHub.Name"),
-        label: game.i18n.localize("SCIFIBATTLE.Settings.GitHub.Label"),
-        hint: game.i18n.localize("SCIFIBATTLE.Settings.GitHub.Hint"),
-        icon: "fab fa-github",
-        type: GitHubLink,
-        restricted: false
-    });
+    
+    // Créer l'espace de nom global pour le module
+    game.scifiBattle = {
+        timeline: null
+    };
 });
 
-// Initialisation au chargement de Foundry
+// S'assurer que le module est correctement enregistré
+Hooks.once('setup', () => {
+    console.log("Sci-Fi Battle Timeline | Setup du module");
+});
+
+// Initialisation une fois que Foundry est prêt
 Hooks.once('ready', () => {
-    window.combatTimeline = new CombatTimeline();
-    window.combatTimeline.initialize();
+    console.log("Sci-Fi Battle Timeline | Module prêt, initialisation de la timeline");
+    
+    // Créer l'instance de la timeline
+    game.scifiBattle.timeline = new CombatTimeline();
+    game.scifiBattle.timeline.initialize();
+});
+
+// Hook pour les changements de tour
+Hooks.on('updateCombat', (combat, changed, options, userId) => {
+    console.log("Sci-Fi Battle Timeline | Combat mis à jour", changed);
+    
+    // Mettre à jour la timeline pour tous les utilisateurs
+    if (game.scifiBattle.timeline) {
+        game.scifiBattle.timeline.updateCombatants(combat);
+
+        // Mettre à jour le numéro de manche
+        const roundTitle = document.getElementById('combat-round');
+        if (roundTitle) {
+            if (combat.started) {
+                roundTitle.textContent = `Manche ${combat.round}`;
+            } else {
+                roundTitle.textContent = 'Préparation du combat';
+            }
+        }
+    }
+    
+    // Ne pas afficher de notification si le combat n'est pas démarré
+    if (!combat.started) return;
+
+    // Vérifier si le combat vient de démarrer
+    if (changed.round === 1 && changed.turn === 0) {
+        const combatant = combat.combatant;
+        if (combatant) {
+            console.log("Sci-Fi Battle Timeline | Combat démarré, premier tour pour", combatant.name);
+            if (game.scifiBattle.timeline) {
+                game.scifiBattle.timeline.showTurnNotification(combatant);
+            }
+        }
+    }
+    // Sinon, vérifier si c'est un changement de tour normal pendant le combat
+    else if (changed.turn !== undefined) {
+        const combatant = combat.combatant;
+        if (combatant) {
+            console.log("Sci-Fi Battle Timeline | Nouveau tour pour", combatant.name);
+            if (game.scifiBattle.timeline) {
+                game.scifiBattle.timeline.showTurnNotification(combatant);
+            }
+        }
+    }
+});
+
+// Hook pour le début du combat
+Hooks.on('createCombat', (combat) => {
+    console.log("Sci-Fi Battle Timeline | Nouveau combat créé");
+    // Ne pas montrer de notification à la création, attendre le démarrage
+    if (game.scifiBattle.timeline && game.user.isGM) {
+        game.scifiBattle.timeline.updateCombatants(combat);
+    }
+});
+
+// Hook pour le démarrage du combat
+Hooks.on('combatStart', (combat) => {
+    console.log("Sci-Fi Battle Timeline | Combat démarré");
+    if (game.scifiBattle.timeline) {
+        // Mettre à jour la timeline et montrer la notification pour le premier combattant
+        game.scifiBattle.timeline.updateCombatants(combat);
+        if (combat.combatant) {
+            game.scifiBattle.timeline.showTurnNotification(combat.combatant);
+        }
+    }
+});
+
+// Hook pour la fin du combat
+Hooks.on('deleteCombat', (combat, options, userId) => {
+    console.log("Sci-Fi Battle Timeline | Combat terminé");
+    if (game.scifiBattle.timeline && game.user.isGM) {
+        // Supprimer toutes les auras
+        game.scifiBattle.timeline.updateTokenAura(null);
+    }
 });
